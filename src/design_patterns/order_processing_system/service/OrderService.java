@@ -1,6 +1,8 @@
 package service;
 
 import config.Logger;
+import discount.DiscountContext;
+import discount.PremiumDiscount;
 import model.Order;
 import model.Product;
 import payment.Payment;
@@ -13,10 +15,14 @@ public class OrderService {
     public void createOrder(Order order) {
 
         double amount = calculateAmount(order);
-        order.setTotalAmount(amount);
+        DiscountContext discountContext = new DiscountContext(new PremiumDiscount());
+        double discount = discountContext.executeStrategy(amount);
+        double finalAmount = amount - discount;
+
+        order.setTotalAmount(finalAmount);
 
         Payment payment = PaymentFactory.getPayment("UPI");
-        payment.pay(amount);
+        payment.pay(finalAmount);
 
         logger.log("Order created successfully ... ");
         logger.log("Customer : " + order.getUser().getName());
