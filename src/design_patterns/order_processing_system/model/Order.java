@@ -1,8 +1,9 @@
 package model;
 
 import java.time.LocalDateTime;
-
 import java.util.List;
+
+import builder.OrderBuilder;
 
 public class Order {
 
@@ -11,42 +12,42 @@ public class Order {
     private List<Product> products;
     private double totalAmount;
     private String status;
-    private LocalDateTime createdDate;
+    private LocalDateTime createdDateTime;
 
-    public Order(int orderId, User user, List<Product> products) {
-
-        this.orderId = orderId;
-        this.user = user;
-        this.products = products;
-        this.status = "CREATED";
-        this.createdDate = LocalDateTime.now();
+    public Order(OrderBuilder builder) {
+        this.orderId = builder.getOrderId();
+        this.user = builder.getUser();
+        this.products = builder.getProducts();
+        this.totalAmount = builder.getTotalAmount();
+        this.status = builder.getStatus();
+        this.createdDateTime = builder.getCreatedDateTime();
     }
 
     public int getOrderId() {
         return orderId;
     }
 
-    public List<Product> getProducts() {
-        return products;
+    public User getUser() {
+        return user;
     }
 
-    public void setTotalAmount(double amount) {
-        this.totalAmount = amount;
+    public List<Product> getProducts() {
+        return products;
     }
 
     public double getTotalAmount() {
         return totalAmount;
     }
 
+    public void setTotalAmount(double amount) {
+        this.totalAmount = amount;
+    }
+
     public String getStatus() {
         return status;
     }
 
-    public User getUser() {
-        return user;
-    }
-
-    public LocalDateTime getCreatedDate() {
-        return createdDate;
+    public LocalDateTime getCreatedDateTime() {
+        return createdDateTime;
     }
 }
