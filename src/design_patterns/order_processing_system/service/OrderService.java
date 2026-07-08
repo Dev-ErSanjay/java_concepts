@@ -3,6 +3,8 @@ package service;
 import config.Logger;
 import model.Order;
 import model.Product;
+import payment.Payment;
+import payment.PaymentFactory;
 
 public class OrderService {
 
@@ -12,6 +14,9 @@ public class OrderService {
 
         double amount = calculateAmount(order);
         order.setTotalAmount(amount);
+
+        Payment payment = PaymentFactory.getPayment("UPI");
+        payment.pay(amount);
 
         logger.log("Order created successfully ... ");
         logger.log("Customer : " + order.getUser().getName());
