@@ -1,5 +1,6 @@
 import java.util.Arrays;
 
+import config.Logger;
 import model.Order;
 import model.Product;
 import model.User;
@@ -16,8 +17,11 @@ public class OrderProcessingSystem {
         Order order = new Order(501, user, Arrays.asList(phone, charger));
 
         OrderService service = new OrderService();
-
         service.createOrder(order);
+
+        Logger logger1 = Logger.getInstance();
+        Logger logger2 = Logger.getInstance();
+        System.out.println(logger1 == logger2);
     }
 
 }
